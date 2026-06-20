@@ -68,7 +68,7 @@ body {
   position: fixed;
   left: 20px;
   top: 80px;
-  z-index: 99;
+  z-index: 50;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -76,7 +76,7 @@ body {
 
 .category-tag {
   display: block;
-  padding: 10px 15px;
+  padding: 12px 15px;
   background: white;
   border: 2px solid #2a2a2a;
   color: #2a2a2a;
@@ -87,6 +87,7 @@ body {
   transition: all 0.3s ease;
   border-radius: 4px;
   text-align: center;
+  white-space: nowrap;
 }
 
 .category-tag:hover {
@@ -97,13 +98,6 @@ body {
 .category-tag.active {
   background: #2a2a2a;
   color: white;
-}
-
-.category-tag .small-text {
-  display: block;
-  font-size: 10px;
-  opacity: 0.7;
-  margin-top: 3px;
 }
 
 /* Portfolio Section */
@@ -132,15 +126,15 @@ body {
 }
 
 .portfolio-page {
-  width: 95%;
-  max-width: 1000px;
+  width: 100%;
+  max-width: 900px;
   height: auto;
   display: block;
   border-radius: 0px;
   box-shadow: none;
-  transform: scale(0.3);
+  transform: scale(1);
   transition: all 0.3s ease;
-  opacity: 0.5;
+  opacity: 1;
 }
 
 .page-wrapper.active .portfolio-page {
@@ -182,4 +176,55 @@ body {
 .about-text p {
   color: #555;
   margin-bottom: 25px;
-  line-height:
+  line-height: 1.9;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+}
+
+.about-text p:last-child {
+  margin-bottom: 0;
+}
+
+/* Footer */
+.footer {
+  background: #2a2a2a;
+  color: #f0e8e0;
+  text-align: center;
+  padding: 50px 20px;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar .container {
+    padding: 15px;
+  }
+
+  .logo-img {
+    height: 30px;
+  }
+
+  .nav-links {
+    gap: 20px;
+  }
+
+  .category-nav {
+    left: 10px;
+    top: 70px;
+    gap: 10px;
+  }
+
+  .category-tag {
+    padding: 8px 10px;
+    font-size: 10px;
+  }
+
+  .about {
+    padding: 80px 20px;
+  }
+
+  .about-text h3 {
+    font-size: 24px;
+  }
+}
