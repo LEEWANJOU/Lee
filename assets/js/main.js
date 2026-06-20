@@ -1,4 +1,29 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Intro Screen Logic
+  const introScreen = document.getElementById('introScreen');
+  const introClose = document.getElementById('introClose');
+  const introImage = document.getElementById('introImage');
+
+  // 排除的頁碼：01, 06, 12, 18
+  const availablePages = [2, 3, 4, 5, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
+  
+  // 隨機選一張
+  const randomPage = availablePages[Math.floor(Math.random() * availablePages.length)];
+  const pageNum = String(randomPage).padStart(2, '0');
+  
+  introImage.src = `./assets/pages/Page-${pageNum}.jpg`;
+
+  // 點擊關閉按鈕
+  introClose.addEventListener('click', () => {
+    introScreen.classList.add('hidden');
+  });
+
+  // 點擊圖片也能關閉
+  introImage.addEventListener('click', () => {
+    introScreen.classList.add('hidden');
+  });
+
+  // Portfolio 放大縮小效果
   const pageWrappers = document.querySelectorAll('.page-wrapper');
 
   const updateScales = () => {
