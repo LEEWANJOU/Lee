@@ -1,22 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
-  var introScreen = document.getElementById('introScreen');
-  var introClose = document.getElementById('introClose');
-  var introImage = document.getElementById('introImage');
-
+  // Hero Section Random Image
+  var heroImage = document.getElementById('heroImage');
   var availablePages = [2, 3, 4, 5, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
   var randomPage = availablePages[Math.floor(Math.random() * availablePages.length)];
   var pageNum = randomPage < 10 ? '0' + randomPage : '' + randomPage;
   
-  introImage.src = './assets/pages/Page-' + pageNum + '.jpg';
+  heroImage.src = './assets/pages/Page-' + pageNum + '.jpg';
 
-  introClose.addEventListener('click', function() {
-    introScreen.style.display = 'none';
-  });
-
-  introImage.addEventListener('click', function() {
-    introScreen.style.display = 'none';
-  });
-
+  // Portfolio Scroll Effect
   var pageWrappers = document.querySelectorAll('.page-wrapper');
 
   function updateScales() {
