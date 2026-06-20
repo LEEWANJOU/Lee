@@ -104,6 +104,8 @@ body.hero-active {
   height: 100%;
   object-fit: cover;
   display: block;
+  opacity: 1;
+  transition: opacity 0.3s ease;
 }
 
 /* Main Content */
@@ -145,9 +147,9 @@ main {
   display: block;
   border-radius: 0px;
   box-shadow: none;
-  transform: scale(0.5);
+  transform: scale(0.75);
   transition: all 0.3s ease;
-  opacity: 0.6;
+  opacity: 0.75;
 }
 
 .portfolio-page:hover {
