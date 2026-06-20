@@ -3,30 +3,77 @@ document.addEventListener('DOMContentLoaded', function() {
   var main = document.getElementById('main');
   var heroImage = document.getElementById('heroImage');
   var portfolioBtn = document.getElementById('portfolioBtn');
+  var logoBtn = document.getElementById('logoBtn');
   
-  // Hero Section - Random Image + 5 Second Auto Switch
   var availablePages = [2, 3, 4, 5, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
-  var randomPage = availablePages[Math.floor(Math.random() * availablePages.length)];
-  var pageNum = randomPage < 10 ? '0' + randomPage : '' + randomPage;
   
-  heroImage.src = './assets/pages/Page-' + pageNum + '.jpg';
+  // Display random image with fade effect
+  function showRandomImage() {
+    var randomPage = availablePages[Math.floor(Math.random() * availablePages.length)];
+    var pageNum = randomPage < 10 ? '0' + randomPage : '' + randomPage;
+    heroImage.style.opacity = '0';
+    
+    setTimeout(function() {
+      heroImage.src = './assets/pages/Page-' + pageNum + '.jpg';
+      heroImage.style.opacity = '1';
+    }, 300);
+  }
   
-  // Auto switch after 5 seconds
-  setTimeout(function() {
+  // Initialize first image
+  showRandomImage();
+  
+  // Change image every 3 seconds
+  var imageInterval = setInterval(function() {
+    if (!hero.classList.contains('hidden')) {
+      showRandomImage();
+    }
+  }, 3000);
+  
+  // Auto switch to Portfolio after 5 seconds
+  var autoSwitchTimer = setTimeout(function() {
     hero.classList.add('hidden');
     main.style.display = 'block';
     document.body.classList.remove('hero-active');
+    clearInterval(imageInterval);
   }, 5000);
   
-  // Click Portfolio button to switch
+  // Portfolio button - Enter portfolio section
   portfolioBtn.addEventListener('click', function(e) {
     e.preventDefault();
     hero.classList.add('hidden');
     main.style.display = 'block';
     document.body.classList.remove('hero-active');
+    clearInterval(imageInterval);
+    clearTimeout(autoSwitchTimer);
+  });
+  
+  // Logo button - Return to hero section
+  logoBtn.addEventListener('click', function() {
+    hero.classList.remove('hidden');
+    main.style.display = 'none';
+    document.body.classList.add('hero-active');
+    window.scrollTo(0, 0);
+    
+    // Restart 3 second image rotation
+    showRandomImage();
+    clearInterval(imageInterval);
+    imageInterval = setInterval(function() {
+      if (!hero.classList.contains('hidden')) {
+        showRandomImage();
+      }
+    }, 3000);
+    
+    // Restart 5 second auto switch timer
+    clearTimeout(autoSwitchTimer);
+    autoSwitchTimer = setTimeout(function() {
+      hero.classList.add('hidden');
+      main.style.display = 'block';
+      document.body.classList.remove('hero-active');
+      clearInterval(imageInterval);
+    }, 5000);
   });
 
-  // Portfolio Scroll Effect - Scale Based on Distance from Viewport Center
+  // Portfolio scroll scaling effect
   var pageWrappers = document.querySelectorAll('.page-wrapper');
 
   function updateScales() {
@@ -37,8 +84,8 @@ document.addEventListener('DOMContentLoaded', function() {
       var distance = Math.abs(viewportCenter - elementCenter);
       var maxDistance = window.innerHeight;
       
-      var scale = Math.max(0.5, 1.3 - (distance / maxDistance) * 0.8);
-      var opacity = Math.max(0.6, 1 - (distance / maxDistance) * 0.4);
+      var scale = Math.max(0.75, 1.05 - (distance / maxDistance) * 0.3);
+      var opacity = Math.max(0.75, 1 - (distance / maxDistance) * 0.25);
       
       var img = wrapper.querySelector('.portfolio-page');
       if (img) {
@@ -51,6 +98,6 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('scroll', updateScales);
   updateScales();
 
-  // Set hero active
+  // Set hero active state
   document.body.classList.add('hero-active');
 });
