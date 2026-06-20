@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
       var elementCenter = rect.top + rect.height / 2;
       var distance = Math.abs(viewportCenter - elementCenter);
       var maxDistance = window.innerHeight;
-      var scale = Math.max(0.75, 1.05 - (distance / maxDistance) * 0.3);
+      var scale = Math.max(0.75, Math.min(1.0, 1.0 - (distance / maxDistance) * 0.25));
       var opacity = Math.max(0.75, 1 - (distance / maxDistance) * 0.25);
       var img = wrapper.querySelector('.portfolio-page');
       if (img) {
