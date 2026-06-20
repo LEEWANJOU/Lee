@@ -2,17 +2,12 @@ document.addEventListener('DOMContentLoaded', function() {
   var hero = document.getElementById('hero');
   var main = document.getElementById('main');
   var heroImage = document.getElementById('heroImage');
-  var logoBtn = document.getElementById('logoBtn');
-  var portfolioBtn = document.getElementById('portfolioBtn');
-  var universityBtn = document.getElementById('universityBtn');
-  var internshipBtn = document.getElementById('internshipBtn');
-  var workBtn = document.getElementById('workBtn');
-  var aboutBtn = document.getElementById('aboutBtn');
 
   var availablePages = [2,3,4,5,7,8,9,10,11,13,14,15,16,17,19,20,21,22,23,24,25,26,27,28,29,30,31];
   var imageInterval = null;
 
   function showRandomImage() {
+    if (!heroImage) return;
     var randomPage = availablePages[Math.floor(Math.random() * availablePages.length)];
     var pageNum = randomPage < 10 ? '0' + randomPage : '' + randomPage;
     heroImage.style.opacity = '0';
@@ -28,9 +23,15 @@ document.addEventListener('DOMContentLoaded', function() {
     imageInterval = setInterval(showRandomImage, 3000);
   }
 
+  // 最優先：馬上開始顯示隨機圖片
+  if (hero && heroImage) {
+    document.body.classList.add('hero-active');
+    startRotation();
+  }
+
   function goToPortfolio(targetId) {
-    hero.classList.add('hidden');
-    main.style.display = 'block';
+    if (hero) hero.classList.add('hidden');
+    if (main) main.style.display = 'block';
     document.body.classList.remove('hero-active');
     if (imageInterval) clearInterval(imageInterval);
     if (targetId) {
@@ -42,19 +43,24 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function goToHero() {
-    hero.classList.remove('hidden');
-    main.style.display = 'none';
+    if (hero) hero.classList.remove('hidden');
+    if (main) main.style.display = 'none';
     document.body.classList.add('hero-active');
     window.scrollTo(0, 0);
     startRotation();
   }
 
-  logoBtn.addEventListener('click', goToHero);
-  portfolioBtn.addEventListener('click', function() { goToPortfolio(null); });
-  universityBtn.addEventListener('click', function() { goToPortfolio('page-01'); });
-  internshipBtn.addEventListener('click', function() { goToPortfolio('page-12'); });
-  workBtn.addEventListener('click', function() { goToPortfolio('page-18'); });
-  aboutBtn.addEventListener('click', function() { goToPortfolio('about'); });
+  function bind(id, handler) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('click', handler);
+  }
+
+  bind('logoBtn', goToHero);
+  bind('portfolioBtn', function() { goToPortfolio(null); });
+  bind('universityBtn', function() { goToPortfolio('page-01'); });
+  bind('internshipBtn', function() { goToPortfolio('page-12'); });
+  bind('workBtn', function() { goToPortfolio('page-18'); });
+  bind('aboutBtn', function() { goToPortfolio('about'); });
 
   var pageWrappers = document.querySelectorAll('.page-wrapper');
   function updateScales() {
@@ -76,7 +82,4 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   window.addEventListener('scroll', updateScales);
   updateScales();
-
-  document.body.classList.add('hero-active');
-  startRotation();
 });
