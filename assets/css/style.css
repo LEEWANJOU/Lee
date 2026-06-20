@@ -175,18 +175,9 @@ body {
 
 /* About Section */
 .about {
-  padding: 80px 40px;
+  padding: 100px 40px;
   background: #ffffff;
-  margin-top: 40px;
-}
-
-.about h2 {
-  font-size: 20px;
-  font-weight: 300;
-  letter-spacing: 2px;
-  margin-bottom: 60px;
-  text-align: center;
-  color: #2a2a2a;
+  margin-top: 80px;
 }
 
 .about-text {
@@ -196,18 +187,18 @@ body {
 }
 
 .about-text h3 {
-  font-size: 16px;
+  font-size: 24px;
   font-weight: 300;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   letter-spacing: 1px;
   color: #2a2a2a;
 }
 
 .about-text p {
   color: #555;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   line-height: 1.8;
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.5px;
 }
 
@@ -271,18 +262,15 @@ body {
   }
 
   .about {
-    padding: 60px 20px;
-  }
-
-  .about h2 {
-    font-size: 18px;
+    padding: 80px 20px;
+    margin-top: 60px;
   }
 
   .about-text h3 {
-    font-size: 14px;
+    font-size: 20px;
   }
 
   .about-text p {
-    font-size: 11px;
+    font-size: 12px;
   }
 }
