@@ -11,41 +11,82 @@ document.addEventListener('DOMContentLoaded', function() {
   function showRandomImage() {
     var randomPage = availablePages[Math.floor(Math.random() * availablePages.length)];
     var pageNum = randomPage < 10 ? '0' + randomPage : '' + randomPage;
+    
+    // Fade out
     heroImage.style.opacity = '0';
     
+    // After fade out, change image then fade in
     setTimeout(function() {
       heroImage.src = './assets/pages/Page-' + pageNum + '.jpg';
       heroImage.style.opacity = '1';
-    }, 300);
+    }, 800);
   }
   
   // Initialize first image
   showRandomImage();
   
-  // Change image every 3 seconds
+  // Change image every 3 seconds continuously
   var imageInterval = setInterval(function() {
     if (!hero.classList.contains('hidden')) {
       showRandomImage();
     }
   }, 3000);
   
-  // Auto switch to Portfolio after 5 seconds
-  var autoSwitchTimer = setTimeout(function() {
+  // Function to enter portfolio section
+  function enterPortfolio() {
     hero.classList.add('hidden');
     main.style.display = 'block';
     document.body.classList.remove('hero-active');
     clearInterval(imageInterval);
-  }, 5000);
+  }
   
   // Portfolio button - Enter portfolio section
   portfolioBtn.addEventListener('click', function(e) {
     e.preventDefault();
-    hero.classList.add('hidden');
-    main.style.display = 'block';
-    document.body.classList.remove('hero-active');
-    clearInterval(imageInterval);
-    clearTimeout(autoSwitchTimer);
+    enterPortfolio();
   });
+  
+  // University link
+  var universityLink = document.querySelector('a[href="#page-01"]');
+  if (universityLink) {
+    universityLink.addEventListener('click', function(e) {
+      if (hero.classList.contains('hidden') === false) {
+        e.preventDefault();
+        enterPortfolio();
+        setTimeout(function() {
+          document.getElementById('page-01').scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    });
+  }
+  
+  // Internship & Work link
+  var internshipLink = document.querySelector('a[href="#page-18"]');
+  if (internshipLink) {
+    internshipLink.addEventListener('click', function(e) {
+      if (hero.classList.contains('hidden') === false) {
+        e.preventDefault();
+        enterPortfolio();
+        setTimeout(function() {
+          document.getElementById('page-18').scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    });
+  }
+  
+  // About link
+  var aboutLink = document.querySelector('a[href="#about"]');
+  if (aboutLink) {
+    aboutLink.addEventListener('click', function(e) {
+      if (hero.classList.contains('hidden') === false) {
+        e.preventDefault();
+        enterPortfolio();
+        setTimeout(function() {
+          document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    });
+  }
   
   // Logo button - Return to hero section
   logoBtn.addEventListener('click', function() {
@@ -54,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.body.classList.add('hero-active');
     window.scrollTo(0, 0);
     
-    // Restart 3 second image rotation
+    // Restart image rotation
     showRandomImage();
     clearInterval(imageInterval);
     imageInterval = setInterval(function() {
@@ -62,15 +103,6 @@ document.addEventListener('DOMContentLoaded', function() {
         showRandomImage();
       }
     }, 3000);
-    
-    // Restart 5 second auto switch timer
-    clearTimeout(autoSwitchTimer);
-    autoSwitchTimer = setTimeout(function() {
-      hero.classList.add('hidden');
-      main.style.display = 'block';
-      document.body.classList.remove('hero-active');
-      clearInterval(imageInterval);
-    }, 5000);
   });
 
   // Portfolio scroll scaling effect
