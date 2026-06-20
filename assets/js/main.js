@@ -125,5 +125,10 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('scroll', updateScales);
   updateScales();
 
-  document.body.classList.add('hero-active');
-});
+  // Check URL hash on load - skip hero if direct link
+  if (window.location.hash) {
+    var targetId = window.location.hash.substring(1);
+    var targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      hero.classList.add('hidden');
+      main.style
