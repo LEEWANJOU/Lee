@@ -4,12 +4,31 @@ document.addEventListener('DOMContentLoaded', function() {
   var heroImage = document.getElementById('heroImage');
 
   var availablePages = [3,4,5,7,9,11,16,17,19,20,21,22,23,24,25,26,27,28,29,30,31];
+  var shuffledPages = [];
   var imageInterval = null;
+
+  function shuffleArray(arr) {
+    var array = arr.slice();
+    for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+    return array;
+  }
+
+  function getNextPage() {
+    if (shuffledPages.length === 0) {
+      shuffledPages = shuffleArray(availablePages);
+    }
+    return shuffledPages.pop();
+  }
 
   function showRandomImage() {
     if (!heroImage) return;
-    var randomPage = availablePages[Math.floor(Math.random() * availablePages.length)];
-    var pageNum = randomPage < 10 ? '0' + randomPage : '' + randomPage;
+    var nextPage = getNextPage();
+    var pageNum = nextPage < 10 ? '0' + nextPage : '' + nextPage;
     heroImage.style.opacity = '0';
     setTimeout(function() {
       heroImage.src = './assets/pages/Page-' + pageNum + '.jpg';
@@ -82,12 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('scroll', updateScales);
   updateScales();
 
-  // Disable right-click
-  document.addEventListener('contextmenu', function(e) {
-    e.preventDefault();
-  });
-
-  // Disable copy, cut, drag
+  document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
   document.addEventListener('copy', function(e) { e.preventDefault(); });
   document.addEventListener('cut', function(e) { e.preventDefault(); });
   document.addEventListener('dragstart', function(e) { e.preventDefault(); });
