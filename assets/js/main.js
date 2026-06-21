@@ -2,12 +2,15 @@ document.addEventListener('DOMContentLoaded', function() {
   var hero = document.getElementById('hero');
   var main = document.getElementById('main');
   var heroImage = document.getElementById('heroImage');
+  var aboutScreen = document.getElementById('aboutScreen');
 
   var allMenu = document.getElementById('allMenu');
   var academicMenu = document.getElementById('academicMenu');
   var internshipMenu = document.getElementById('internshipMenu');
   var workMenu = document.getElementById('workMenu');
   var menus = [allMenu, academicMenu, internshipMenu, workMenu];
+
+  var introIds = ['introAcad01','introAcad06','introIntern38','introIntern32','introWork20','introWork24','introWork26','introWork37','introWork33','introWork34'];
 
   var availablePages = [3,4,5,7,9,11,16,17,19,20,21,22,23,24,25,26,27,28,29,30,31];
   var shuffledPages = [];
@@ -17,20 +20,14 @@ document.addEventListener('DOMContentLoaded', function() {
     var array = arr.slice();
     for (var i = array.length - 1; i > 0; i--) {
       var j = Math.floor(Math.random() * (i + 1));
-      var temp = array[i];
-      array[i] = array[j];
-      array[j] = temp;
+      var temp = array[i]; array[i] = array[j]; array[j] = temp;
     }
     return array;
   }
-
   function getNextPage() {
-    if (shuffledPages.length === 0) {
-      shuffledPages = shuffleArray(availablePages);
-    }
+    if (shuffledPages.length === 0) shuffledPages = shuffleArray(availablePages);
     return shuffledPages.pop();
   }
-
   function showRandomImage() {
     if (!heroImage) return;
     var nextPage = getNextPage();
@@ -41,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function() {
       heroImage.style.opacity = '1';
     }, 600);
   }
-
   function startRotation() {
     showRandomImage();
     if (imageInterval) clearInterval(imageInterval);
@@ -52,66 +48,66 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function filterPagesRange(minPage, maxPage) {
     for (var i = 0; i < pageWrappers.length; i++) {
-      var wrapper = pageWrappers[i];
-      var pageNum = parseInt(wrapper.getAttribute('data-page'), 10);
-      wrapper.style.display = (pageNum >= minPage && pageNum <= maxPage) ? 'flex' : 'none';
+      var w = pageWrappers[i];
+      var p = parseInt(w.getAttribute('data-page'), 10);
+      w.style.display = (p >= minPage && p <= maxPage) ? 'flex' : 'none';
     }
     updateScales();
   }
-
   function filterPagesList(list) {
     for (var i = 0; i < pageWrappers.length; i++) {
-      var wrapper = pageWrappers[i];
-      var pageNum = parseInt(wrapper.getAttribute('data-page'), 10);
-      wrapper.style.display = (list.indexOf(pageNum) !== -1) ? 'flex' : 'none';
+      var w = pageWrappers[i];
+      var p = parseInt(w.getAttribute('data-page'), 10);
+      w.style.display = (list.indexOf(p) !== -1) ? 'flex' : 'none';
     }
     updateScales();
   }
-
+  function showIntroPanel(activeId) {
+    for (var i = 0; i < introIds.length; i++) {
+      var el = document.getElementById(introIds[i]);
+      if (el) el.style.display = (introIds[i] === activeId) ? 'flex' : 'none';
+    }
+    updateScales();
+  }
   function updateScales() {
-    var viewportCenter = window.innerHeight / 2;
+    var vc = window.innerHeight / 2;
     for (var i = 0; i < pageWrappers.length; i++) {
-      var wrapper = pageWrappers[i];
-      if (wrapper.style.display === 'none') continue;
-      var rect = wrapper.getBoundingClientRect();
-      var elementCenter = rect.top + rect.height / 2;
-      var distance = Math.abs(viewportCenter - elementCenter);
-      var maxDistance = window.innerHeight;
-      var scale = Math.max(0.6, Math.min(1.0, 1.1 - (distance / maxDistance) * 0.5));
-      var opacity = Math.max(0.5, 1 - (distance / maxDistance) * 0.5);
-      var img = wrapper.querySelector('.portfolio-page');
-      if (img) {
-        img.style.transform = 'scale(' + scale + ')';
-        img.style.opacity = opacity;
-      }
+      var w = pageWrappers[i];
+      if (w.style.display === 'none') continue;
+      var r = w.getBoundingClientRect();
+      var ec = r.top + r.height / 2;
+      var d = Math.abs(vc - ec);
+      var md = window.innerHeight;
+      var scale = Math.max(0.6, Math.min(1.0, 1.1 - (d / md) * 0.5));
+      var opacity = Math.max(0.5, 1 - (d / md) * 0.5);
+      var img = w.querySelector('.portfolio-page');
+      if (img) { img.style.transform = 'scale(' + scale + ')'; img.style.opacity = opacity; }
     }
   }
   window.addEventListener('scroll', updateScales);
 
   function hideAllScreens() {
     if (hero) hero.classList.add('hidden');
-    for (var i = 0; i < menus.length; i++) {
-      if (menus[i]) menus[i].style.display = 'none';
-    }
+    for (var i = 0; i < menus.length; i++) { if (menus[i]) menus[i].style.display = 'none'; }
     if (main) main.style.display = 'none';
+    if (aboutScreen) aboutScreen.style.display = 'none';
     document.body.classList.remove('hero-active');
     if (imageInterval) clearInterval(imageInterval);
   }
-
-  function enterMainRange(minPage, maxPage, scrollTargetId) {
+  function enterMainRange(minPage, maxPage, scrollTargetId, introId) {
     hideAllScreens();
     main.style.display = 'block';
+    showIntroPanel(introId || null);
     filterPagesRange(minPage, maxPage);
     afterEnterMain(scrollTargetId);
   }
-
-  function enterMainList(list, scrollTargetId) {
+  function enterMainList(list, scrollTargetId, introId) {
     hideAllScreens();
     main.style.display = 'block';
+    showIntroPanel(introId || null);
     filterPagesList(list);
     afterEnterMain(scrollTargetId);
   }
-
   function afterEnterMain(scrollTargetId) {
     if (scrollTargetId) {
       setTimeout(function() {
@@ -122,13 +118,16 @@ document.addEventListener('DOMContentLoaded', function() {
       setTimeout(function() { window.scrollTo(0, 0); }, 50);
     }
   }
-
   function showMenu(menuEl) {
     hideAllScreens();
     menuEl.style.display = 'flex';
     window.scrollTo(0, 0);
   }
-
+  function showAboutScreen() {
+    hideAllScreens();
+    aboutScreen.style.display = 'flex';
+    window.scrollTo(0, 0);
+  }
   function goToHero() {
     hideAllScreens();
     hero.classList.remove('hidden');
@@ -136,56 +135,44 @@ document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, 0);
     startRotation();
   }
-
   function bind(id, handler) {
     var el = document.getElementById(id);
     if (el) el.addEventListener('click', handler);
   }
 
-  var navItems = ['allBtn', 'academicBtn', 'internshipBtn', 'workBtn', 'aboutBtn'];
+  var navItems = ['allBtn','academicBtn','internshipBtn','workBtn','aboutBtn'];
   function setActiveNav(activeId) {
     for (var i = 0; i < navItems.length; i++) {
       var el = document.getElementById(navItems[i]);
-      if (el) {
-        if (navItems[i] === activeId) {
-          el.classList.add('active');
-        } else {
-          el.classList.remove('active');
-        }
-      }
+      if (el) { if (navItems[i] === activeId) el.classList.add('active'); else el.classList.remove('active'); }
     }
   }
 
-  // Top nav
   bind('logoBtn', function() { setActiveNav(null); goToHero(); });
   bind('portfolioBtn', function() { setActiveNav(null); showMenu(allMenu); });
   bind('allBtn', function() { setActiveNav('allBtn'); showMenu(allMenu); });
   bind('academicBtn', function() { setActiveNav('academicBtn'); showMenu(academicMenu); });
   bind('internshipBtn', function() { setActiveNav('internshipBtn'); showMenu(internshipMenu); });
   bind('workBtn', function() { setActiveNav('workBtn'); showMenu(workMenu); });
-  bind('aboutBtn', function() { setActiveNav('aboutBtn'); enterMainRange(1, 39, 'about'); });
+  bind('aboutBtn', function() { setActiveNav('aboutBtn'); showAboutScreen(); });
 
-  // All menu tiles
-  bind('allTile01', function() { setActiveNav('academicBtn'); enterMainRange(1, 5, null); });
-  bind('allTile06', function() { setActiveNav('academicBtn'); enterMainRange(6, 11, null); });
-  bind('allTile12', function() { setActiveNav('internshipBtn'); enterMainRange(12, 17, null); });
-  bind('allTile18', function() { setActiveNav('workBtn'); enterMainRange(18, 39, null); });
+  bind('allTile01', function() { setActiveNav('academicBtn'); enterMainRange(2, 5, null, 'introAcad01'); });
+  bind('allTile06', function() { setActiveNav('academicBtn'); enterMainRange(7, 11, null, 'introAcad06'); });
+  bind('allTile12', function() { setActiveNav('internshipBtn'); enterMainRange(12, 17, null, null); });
+  bind('allTile18', function() { setActiveNav('workBtn'); enterMainRange(18, 39, null, null); });
 
-  // Academic menu tiles
-  bind('acadTile01', function() { setActiveNav('academicBtn'); enterMainRange(1, 5, null); });
-  bind('acadTile06', function() { setActiveNav('academicBtn'); enterMainRange(6, 11, null); });
+  bind('acadTile01', function() { setActiveNav('academicBtn'); enterMainRange(2, 5, null, 'introAcad01'); });
+  bind('acadTile06', function() { setActiveNav('academicBtn'); enterMainRange(7, 11, null, 'introAcad06'); });
 
-  // Internship menu tiles
-  bind('internTile38', function() { setActiveNav('internshipBtn'); enterMainList([38, 14, 39, 15], null); });
-  bind('internTile32', function() { setActiveNav('internshipBtn'); enterMainRange(16, 17, null); });
+  bind('internTile38', function() { setActiveNav('internshipBtn'); enterMainList([38,14,39,15], null, 'introIntern38'); });
+  bind('internTile32', function() { setActiveNav('internshipBtn'); enterMainRange(16, 17, null, 'introIntern32'); });
 
-  // Work menu tiles
-  bind('workTile20', function() { setActiveNav('workBtn'); enterMainRange(19, 23, null); });
-  bind('workTile24', function() { setActiveNav('workBtn'); enterMainRange(24, 25, null); });
-  bind('workTile26', function() { setActiveNav('workBtn'); enterMainList([26, 35, 36], null); });
-  bind('workTile37', function() { setActiveNav('workBtn'); enterMainRange(27, 27, null); });
-  bind('workTile33', function() { setActiveNav('workBtn'); enterMainRange(28, 29, null); });
-  bind('workTile34', function() { setActiveNav('workBtn'); enterMainRange(30, 31, null); });
+  bind('workTile20', function() { setActiveNav('workBtn'); enterMainRange(19, 23, null, 'introWork20'); });
+  bind('workTile24', function() { setActiveNav('workBtn'); enterMainRange(24, 25, null, 'introWork24'); });
+  bind('workTile26', function() { setActiveNav('workBtn'); enterMainList([26,35,36], null, 'introWork26'); });
+  bind('workTile37', function() { setActiveNav('workBtn'); enterMainRange(27, 27, null, 'introWork37'); });
+  bind('workTile33', function() { setActiveNav('workBtn'); enterMainRange(28, 29, null, 'introWork33'); });
+  bind('workTile34', function() { setActiveNav('workBtn'); enterMainRange(30, 31, null, 'introWork34'); });
 
   if (hero && heroImage) {
     document.body.classList.add('hero-active');
