@@ -106,6 +106,24 @@ img { max-width: 100%; height: auto; -webkit-user-drag: none; }
 }
 .portfolio-menu-item:hover img { transform: scale(1.08); }
 
+/* About standalone screen */
+.about-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  background: #ffffff;
+  z-index: 40;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 90px 20px 20px;
+  overflow-y: auto;
+}
+
 main { position: relative; z-index: 1; }
 
 .portfolio { padding: 20px 20px 0; background: #ffffff; }
@@ -136,7 +154,38 @@ main { position: relative; z-index: 1; }
 }
 .portfolio-page:hover { filter: brightness(1.05); }
 
-.about { padding: 100px 40px; background: #ffffff; margin-top: 80px; }
+/* Academic Intro Panel */
+.academic-intro {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 30px 40px;
+}
+.academic-intro-inner {
+  max-width: 600px;
+  text-align: left;
+}
+.academic-intro-inner h2 {
+  font-size: 26px;
+  font-weight: 400;
+  color: #7a2330;
+  margin-bottom: 24px;
+  letter-spacing: 1px;
+}
+.academic-intro-inner p {
+  font-size: 13px;
+  color: #444;
+  margin-bottom: 10px;
+  line-height: 1.8;
+}
+.academic-intro-inner p strong {
+  font-weight: 700;
+  color: #2a2a2a;
+}
+
 .about-text { max-width: 600px; margin: 0 auto; text-align: center; }
 .about-text h2 { font-size: 32px; font-weight: 400; margin-bottom: 40px; letter-spacing: 2px; color: #2a2a2a; }
 .about-text h3 { font-size: 13px; font-weight: 300; margin-bottom: 12px; letter-spacing: 0.5px; color: #555; }
@@ -160,9 +209,12 @@ main { position: relative; z-index: 1; }
   }
   .portfolio-menu { padding: 75px 15px 15px; }
   .portfolio-menu-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .about-screen { padding: 75px 15px 15px; }
   .page-wrapper { min-height: 90vh; min-height: 90dvh; }
   .portfolio-page { max-width: 80%; }
-  .about { padding: 80px 20px; margin-top: 60px; }
+  .academic-intro { padding: 90px 20px 30px; }
+  .academic-intro-inner h2 { font-size: 22px; }
+  .academic-intro-inner p { font-size: 12px; }
   .about-text h2 { font-size: 26px; }
   .about-text h3 { font-size: 12px; }
   .about-text p { font-size: 12px; }
