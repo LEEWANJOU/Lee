@@ -163,20 +163,20 @@ document.addEventListener('DOMContentLoaded', function() {
   bind('academicBtn', function() { setActiveNav('academicBtn'); showMenu(academicMenu); });
   bind('internshipBtn', function() { setActiveNav('internshipBtn'); showMenu(internshipMenu); });
   bind('workBtn', function() { setActiveNav('workBtn'); showMenu(workMenu); });
-  bind('aboutBtn', function() { setActiveNav('aboutBtn'); enterMainRange(1, 36, 'about'); });
+  bind('aboutBtn', function() { setActiveNav('aboutBtn'); enterMainRange(1, 39, 'about'); });
 
   // All menu tiles
   bind('allTile01', function() { setActiveNav('academicBtn'); enterMainRange(1, 5, null); });
   bind('allTile06', function() { setActiveNav('academicBtn'); enterMainRange(6, 11, null); });
   bind('allTile12', function() { setActiveNav('internshipBtn'); enterMainRange(12, 17, null); });
-  bind('allTile18', function() { setActiveNav('workBtn'); enterMainRange(18, 36, null); });
+  bind('allTile18', function() { setActiveNav('workBtn'); enterMainRange(18, 39, null); });
 
   // Academic menu tiles
   bind('acadTile01', function() { setActiveNav('academicBtn'); enterMainRange(1, 5, null); });
   bind('acadTile06', function() { setActiveNav('academicBtn'); enterMainRange(6, 11, null); });
 
   // Internship menu tiles
-  bind('internTile12', function() { setActiveNav('internshipBtn'); enterMainRange(12, 15, null); });
+  bind('internTile38', function() { setActiveNav('internshipBtn'); enterMainList([38, 14, 39, 15], null); });
   bind('internTile32', function() { setActiveNav('internshipBtn'); enterMainRange(16, 17, null); });
 
   // Work menu tiles
