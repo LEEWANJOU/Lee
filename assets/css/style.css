@@ -12,7 +12,9 @@ img { max-width: 100%; height: auto; -webkit-user-drag: none; }
 
 .navbar { position: fixed; top: 0; width: 100%; background: rgba(255,255,255,0.98); border-bottom: 1px solid #e8e4d8; z-index: 300; backdrop-filter: blur(10px); }
 .navbar .container { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; }
-.logo-img { height: 40px; width: auto; display: block; cursor: pointer; }
+.logo-wrap { display: flex; align-items: center; cursor: pointer; }
+.logo-img { height: 40px; width: auto; display: block; }
+.logo-text { font-size: 16px; font-weight: 700; letter-spacing: 1px; color: #2a2a2a; white-space: nowrap; }
 .nav-links { display: flex; gap: 30px; align-items: center; }
 .nav-links a { text-decoration: none; color: #2a2a2a; transition: opacity 0.3s ease; cursor: pointer; }
 .nav-links a.nav-main { font-size: 14px; font-weight: 400; letter-spacing: 1px; }
@@ -36,16 +38,16 @@ main { position: relative; z-index: 1; }
 
 .portfolio { padding: 20px 20px 0; background: #ffffff; }
 .pages-snap-container { display: flex; flex-direction: column; gap: 0px; max-width: 100%; }
-.page-wrapper { display: flex; justify-content: center; align-items: center; min-height: 100vh; min-height: 100dvh; scroll-snap-align: center; scroll-snap-stop: always; padding: 10px 0; margin: 0px; border: none; position: relative; overflow: hidden; width: 100%; }
-.portfolio-page { width: 100%; max-width: 80%; height: auto; display: block; transform: scale(0.6); transition: all 0.3s ease; opacity: 0.5; }
+.page-wrapper { display: flex; justify-content: center; align-items: center; min-height: 70vh; min-height: 70dvh; scroll-snap-align: center; scroll-snap-stop: always; padding: 5px 0; margin: 0; border: none; position: relative; overflow: hidden; width: 100%; }
+.portfolio-page { width: 100%; max-width: 85%; height: auto; display: block; transform: scale(0.75); transition: all 0.3s ease; opacity: 0.6; }
 .portfolio-page:hover { filter: brightness(1.05); }
 
-.project-intro { width: 100%; min-height: 100vh; min-height: 100dvh; display: flex; align-items: center; justify-content: center; padding: 100px 30px 40px; }
-.project-intro-inner { max-width: 600px; text-align: left; }
-.project-intro-inner h2 { font-size: 24px; font-weight: 400; color: #7a2330; margin-bottom: 24px; letter-spacing: 1px; }
-.project-intro-inner p { font-size: 13px; color: #444; margin-bottom: 10px; line-height: 1.8; }
+.project-intro { width: 100%; min-height: auto; display: block; padding: 80px 0 10px 30px; }
+.project-intro-inner { max-width: 600px; text-align: left; margin: 0; }
+.project-intro-inner h2 { font-size: 18px; font-weight: 400; color: #7a2330; margin-bottom: 16px; letter-spacing: 1px; }
+.project-intro-inner p { font-size: 13px; color: #444; margin-bottom: 8px; line-height: 1.7; }
 .project-intro-inner p strong { font-weight: 700; color: #2a2a2a; }
-.project-intro.academic-style .project-intro-inner h2 { font-size: 26px; }
+.project-intro.academic-style .project-intro-inner h2 { font-size: 20px; }
 
 .about-text { max-width: 600px; margin: 0 auto; text-align: center; }
 .about-text h2 { font-size: 32px; font-weight: 400; margin-bottom: 40px; letter-spacing: 2px; color: #2a2a2a; }
@@ -58,6 +60,7 @@ main { position: relative; z-index: 1; }
 @media (max-width: 768px) {
   .navbar .container { padding: 15px; }
   .logo-img { height: 30px; }
+  .logo-text { font-size: 14px; }
   .nav-links { gap: 15px; flex-wrap: wrap; }
   .nav-links a.nav-main { font-size: 12px; }
   .nav-links a.nav-sub { font-size: 10px; }
@@ -66,10 +69,10 @@ main { position: relative; z-index: 1; }
   .portfolio-menu { padding: 75px 15px 15px; }
   .portfolio-menu-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .about-screen { padding: 75px 15px 15px; }
-  .page-wrapper { min-height: 90vh; min-height: 90dvh; }
-  .portfolio-page { max-width: 80%; }
-  .project-intro { padding: 90px 20px 30px; }
-  .project-intro-inner h2 { font-size: 20px; }
+  .page-wrapper { min-height: 60vh; min-height: 60dvh; }
+  .portfolio-page { max-width: 90%; transform: scale(0.85); }
+  .project-intro { padding: 70px 0 10px 20px; }
+  .project-intro-inner h2 { font-size: 17px; }
   .project-intro-inner p { font-size: 12px; }
   .about-text h2 { font-size: 26px; }
   .about-text h3 { font-size: 12px; }
