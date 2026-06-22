@@ -31,11 +31,16 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!heroImage) return;
     var nextPage = pickPage();
     var pageNum = nextPage < 10 ? '0' + nextPage : '' + nextPage;
+    var newSrc = './assets/pages/Page-' + pageNum + '.jpeg';
     heroImage.style.opacity = '0';
-    setTimeout(function() {
-      heroImage.src = './assets/pages/Page-' + pageNum + '.jpeg';
-      heroImage.style.opacity = '1';
-    }, 600);
+    var preload = new Image();
+    preload.onload = function() {
+      setTimeout(function() {
+        heroImage.src = newSrc;
+        heroImage.style.opacity = '1';
+      }, 800);
+    };
+    preload.src = newSrc;
   }
   function startRotation() {
     if (imageInterval) clearInterval(imageInterval);
